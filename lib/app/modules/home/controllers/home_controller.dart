@@ -1,12 +1,15 @@
 import 'package:get/get.dart';
+import 'package:get_practice/app/modules/home/models/all_product_model.dart';
+import 'package:get_practice/app/modules/home/models/product_response_model.dart';
+import 'package:get_practice/app/modules/home/repositories/all_product_repo.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
+  var productsList = <ProductModel>[].obs;
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+    fetchProducts();
   }
 
   @override
@@ -19,5 +22,14 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
+  void fetchProducts() async{
+    final response = await AllProductRepository.fetchProducts();
+    if(response != null){
+      productsList.value = response.products;
+    }
+  }
+
+
+
+
 }

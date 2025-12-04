@@ -77,13 +77,14 @@ class HomeView extends GetView<HomeController> {
   //Search Bar widget
   Widget productCard() {
     return Expanded(
-      child: GridView.builder(
+      child:Obx(() =>GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
           crossAxisCount: 2,
           childAspectRatio: 0.68,
         ),
-        itemCount: 5,
+        itemCount: controller.productsList.length,
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
@@ -100,8 +101,8 @@ class HomeView extends GetView<HomeController> {
                       width: double.infinity,
                       child: Stack(
                         children: [
-                          Image.asset(
-                            "assets/images/product.webp",
+                          Image.network(
+                            controller.productsList[index].thumbnail,
                             fit: BoxFit.cover,
                           ),
                           Positioned(
@@ -119,15 +120,15 @@ class HomeView extends GetView<HomeController> {
                         ],
                       ),
                     ),
-                    Text("Eye Liner", style: productNameText()),
-                    Text("\$ 300", style: productPriceNameText()),
+                    Text(controller.productsList[index].title, style: productNameText()),
+                    Text(controller.productsList[index].price.toString(), style: productPriceNameText()),
                   ],
                 ),
               ),
             ),
           );
         },
-      ),
+      )),
     );
   }
 }
